@@ -1,0 +1,349 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Medium.ttf');
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+:root {
+    --background-color: #ecf0f1;
+    --primary-color: #2ecc71;
+    --secondary-color: #95a5a6;
+    --accent-color: #e74c3c;
+    --text-color: #2c3e50;
+    --navbar-height: 85px;
+    --footer-height: 300px;
+}
+body {
+    background-color: var(--background-color);
+    font-family: Roboto;
+}
+
+.headline {
+    font-weight: bold;
+    color: var(--text-color);
+    font-family: Roboto;
+}
+
+.headline {
+    border-bottom: var(--primary-color) 5px solid;
+    max-width: 250px;
+}
+
+/** Navbar **/
+nav {
+    -webkit-box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.6);
+    box-shadow: 0px 4px 15px -6px rgba(0,0,0,0.6);
+    background-color: transparent;
+    height: var(--navbar-height);
+    border-bottom: var(--primary-color) 5px solid ;
+}
+nav ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: -webkit-flex;
+    display: flex;
+    padding: 16px;
+}
+nav ul li {
+    justify-content: space-between;
+}
+nav ul li a {
+    display: block;
+    color: var(--text-color);
+    text-align: center;
+    font-weight: bold;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+nav .flex-item-33 {
+    margin: 0;
+    padding: 0;
+}
+nav .flex-container .flex-item-33 .profile {
+    display: block;
+    color: var(--text-color);
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
+}
+nav .logo {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+}
+nav input[type="search"] {
+    border: none;
+    padding: 12px;
+    margin: 4px;
+    display: block;
+    border-radius: 10px;
+    border: 1px var(--primary-color) solid;
+}
+nav input[type="search"]::placeholder {
+    font-weight: bold;
+    font-family: Roboto;
+}
+nav input[type="search"]:focus {
+    outline: none;
+}
+.dropbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown button {
+    color: var(--text-color);
+    font-weight: bold;
+    font-family: 'Roboto';
+}
+.dropdown-content a {
+    color: var(--text-color);
+    font-weight: bold;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+   background-color: #f1f1f1
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/** Login Form **/
+.login__form {
+    height: calc(100vh - var(--navbar-height));
+}
+.login__form form {
+    text-align: center;
+    padding: 16px;
+    border-bottom: var(--primary-color) 5px solid;
+    background-color: white;
+    border-radius: 10px;
+    width: 450px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.login__form .form-group {
+    width: 100%;
+    padding: 16px 14px;
+    height: 100px;
+}
+.login__form .form-group label{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    color: var(--text-color);
+}
+.login__form .form-group input {
+    padding: 13px;
+    border: none;
+    border: var(--primary-color) 2px solid;
+    border-radius: 6px;
+    min-width: 300px;
+}
+.login__form .form-group input::placeholder {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 15px;
+}
+.login__form .form-group input:focus {
+    outline: none;
+}
+.login__form .form-group input[type="submit"] {
+    border: none;
+    color: white;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+/** Register Form **/
+.register__form {
+    height: calc(100vh - var(--navbar-height));
+}
+
+.alert {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.register__form form {
+    text-align: center;
+    padding: 16px;
+    border-bottom: var(--primary-color) 5px solid;
+    background-color: white;
+    width: 450px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.register__form .form-group {
+    width: 100%;
+    padding: 16px 14px;
+    height: 100px;
+}
+
+.register__form .form-group label{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    color: var(--text-color);
+}
+.register__form .form-group input {
+    padding: 13px;
+    border: none;
+    border: var(--primary-color) 2px solid;
+    border-radius: 6px;
+    min-width: 300px;
+}
+.register__form .form-group input::placeholder {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 15px;
+}
+.register__form .form-group input:focus {
+    outline: none;
+}
+.register__form .form-group input[type="submit"] {
+    border: none;
+    color: white;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/** Footer **/
+footer {
+    position: static;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    max-height: var(--footer-height);
+    margin-top: 0 !important;
+}
+
+footer a {
+    color: var(--text-color);
+    font-weight: bold;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+footer ul {
+    list-style-type: none;
+}
+
+
+footer p {
+    text-align: center;
+}
+
+/** Favourite Receipes **/
+.favourite__receipes {
+    margin-top: 100px;
+}
+
+.food__card {
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    min-width: 100px;
+    min-width: 400px;
+}
+
+.food__card__header > img {
+    max-height: 250px;
+    min-width: 100%;
+    border-radius: 5px 5px 0 0;
+}
+.food__card__body {
+    text-align: center;
+    padding: 16px;
+}
+
+.food__card__button {
+    margin-top: 25px;
+    border: none;
+    background-color: transparent;
+    border-radius: 10px;
+    border: var(--primary-color) 2px solid;
+    color: var(--text-color);
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.6s;
+}
+
+.food__card__button:hover {
+    background-color: var(--primary-color);
+    border: var(--text-color) 2px solid;
+    transition: 0.6s;
+}
+
+.food__card__header {
+    margin: 0;
+    padding: 0;
+}
+
+.food__card__description {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/** Fast Receipes **/
+.fast__receipes {
+    margin-top: 100px;
+}
+
+/** New Receipes **/
+.new__receipes {
+    margin-top: 60px;
+}
+
+/** All Receipes **/
+
+.pagination {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.all__receipes .pagination {
+    display: inline-block;
+  }
+  
+  .all__receipes .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  .all__receipes .pagination a.active {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .all__receipes .pagination a:hover:not(.active) {background-color: #ddd;}

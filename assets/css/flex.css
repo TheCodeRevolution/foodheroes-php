@@ -1,0 +1,45 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+}
+
+.flex-item-50 {
+    padding: 5px;
+    flex: 50%;
+    margin: 25px;
+}
+
+.flex-item-25 {
+    padding: 5px;
+    flex: 25%;
+    margin: 25px;
+}
+
+.flex-item-75 {
+    padding: 5px;
+    flex: 75%;
+    margin: 25px;
+}
+
+.flex-item-33 {
+    padding: 5px;
+    flex: 33.33333333333333%;
+    margin: 25px;
+}
+
+/** Grid **/
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    width: 50%;
+  }
+  .grid-item {
+    padding: 20px;
+    text-align: center;
+  }
