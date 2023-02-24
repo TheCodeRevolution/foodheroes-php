@@ -1,6 +1,11 @@
 <?php
+require('lib/database.php');
+require('lib/session.php');
+require('lib/authentication.php');
+require('lib/response.php');
 
-require('php/bootsrap.php');
+
+session_start();
 
 ?>
 
@@ -44,13 +49,28 @@ require('php/bootsrap.php');
             <!-- Profile -->
             <div class="flex-item-33">
                 <div class="flex-container">
-                    <div class="dropdown">
-                        <button class="dropbtn">Dein Account</button>
-                        <div class="dropdown-content">
-                            <a href="pages/user/signup.php">Registrieren</a>
-                            <a href="pages/user/signin.php">Anmelden</a>
+                    <?php if (auth_user() != null) { ?>
+
+                        <div class="dropdown">
+                            <button class="dropbtn">
+                                <?='Hallo ' . auth_user()["username"] ?>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="pages/user/profile.php">Profil</a>
+                                <a href="pages/user/dashboard.php">Meine Rezepte</a>
+                                <a href="lib/bootsrap/logout.php">Abmelden</a>
+                            </div>
                         </div>
-                    </div>
+                    <?php } else { ?>
+
+                        <div class="dropdown">
+                            <button class="dropbtn">Dein Account</button>
+                            <div class="dropdown-content">
+                                <a href="">Registrieren</a>
+                                <a href="signin.php">Anmelden</a>
+                            </div>
+                        </div>
+                    <?php } ?>
 
                 </div>
             </div>

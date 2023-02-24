@@ -37,10 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'email' => $email
         ]);
 
-        if ($user) {
+        if ($user && password_verify($password, $user["password"])) {
             $ok = true;
         } else {
-            $errors['email'] = 'Es existiert kein Benutzer mit dieser E-Mail';
+            $errors['login'] = 'Fehler beim Anmelden!';
         }
 
         if (isset($ok) && $ok) {
@@ -155,6 +155,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <input type="submit" value="Anmelden">
+                    <?php if (isset($errors['login'])): ?>
+                        <div class="alert">
+                            <?= $errors['login'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
             </form>

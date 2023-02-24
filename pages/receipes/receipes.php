@@ -1,3 +1,13 @@
+<?php
+
+require('../../lib/database.php');
+require('../../lib/session.php');
+require('../../lib/authentication.php');
+require('../../lib/response.php');
+
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="de">
 
@@ -36,13 +46,29 @@
             <!-- Profile -->
             <div class="flex-item-33">
                 <div class="flex-container">
-                    <div class="dropdown">
-                        <button class="dropbtn">Dein Account</button>
-                        <div class="dropdown-content">
-                            <a href="../user/signup.php">Registrieren</a>
-                            <a href="../user/signin.php">Anmelden</a>
+
+                    <?php if (auth_user() != null) { ?>
+
+                        <div class="dropdown">
+                            <button class="dropbtn">
+                                <?='Hallo ' . auth_user()["username"] ?>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="../user/profile.php">Profil</a>
+                                <a href="../user/dashboard.php">Meine Rezepte</a>
+                                <a href="../../lib/bootsrap/logout.php">Abmelden</a>
+                            </div>
                         </div>
-                    </div>
+                    <?php } else { ?>
+
+                        <div class="dropdown">
+                            <button class="dropbtn">Dein Account</button>
+                            <div class="dropdown-content">
+                                <a href="../user/signup.php">Registrieren</a>
+                                <a href="../user/signin.php">Anmelden</a>
+                            </div>
+                        </div>
+                    <?php } ?>
 
                 </div>
             </div>

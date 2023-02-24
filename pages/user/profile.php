@@ -1,5 +1,10 @@
 <?php
 
+require('../../lib/database.php');
+require('../../lib/session.php');
+require('../../lib/authentication.php');
+require('../../lib/response.php');
+
 session_start();
 
 ?>
