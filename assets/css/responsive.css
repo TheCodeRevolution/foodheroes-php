@@ -24,4 +24,11 @@
         width: 25%;
     }
 
+    .all__user__receipes__card {
+        width: 80%;
+    }
+
+    .create__receipe__card {
+        width: 80%;
+    }
 }

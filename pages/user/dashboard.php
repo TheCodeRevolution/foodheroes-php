@@ -81,7 +81,7 @@ if (auth_user() == null) {
 
     <!-- Sidebar -->
     <div class="sidebar__button" id="sidebar__button">
-        <button><img src="assets/icons/burger.svg" height="25" width="25" alt="Burger Menu"></button>
+        <button><img src="../../assets/icons/burger.svg" height="25" width="25" alt="Burger Menu"></button>
     </div>
 
     <div class="sidebar__content" id="sidebar__content">

@@ -88,7 +88,7 @@ session_start();
 
                 <?php if (auth_user() != null) { ?>
                     <li><a href="../user/profile.php">Profil</a></li>
-                    <li><a href="../user/receipes.php">Meine Rezepte</a></li>
+                    <li><a href="../../user/receipes.php">Meine Rezepte</a></li>
                     <li> <a href="l../user/logout.php">Abmelden</a></li>
                 <?php } else { ?>
                     <li><a href="../user/signup.php">Registrieren</a></li>
