@@ -375,13 +375,13 @@ session_start();
                             <a href="index.php">Startseite</a>
                         </li>
                         <li>
-                            <a href="#">Alle Rezepte</a>
+                            <a href="pages/receipes/receipes.php">Alle Rezepte</a>
                         </li>
                         <li>
-                            <a href="pages/signin.php">Anmelden</a>
+                            <a href="pages/user/signin.php">Anmelden</a>
                         </li>
                         <li>
-                            <a href="pages/signup.php">Registrieren</a>
+                            <a href="pages/user/signup.php">Registrieren</a>
                         </li>
                     </ul>
                 </div>

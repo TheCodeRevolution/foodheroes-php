@@ -231,16 +231,16 @@ session_start();
                 <div class="flex-container">
                     <ul>
                         <li>
-                            <a href="index.php">Startseite</a>
+                            <a href="../../index.php">Startseite</a>
                         </li>
                         <li>
-                            <a href="#">Alle Rezepte</a>
+                            <a href="receipes.php">Alle Rezepte</a>
                         </li>
                         <li>
-                            <a href="pages/signin.php">Anmelden</a>
+                            <a href="../user/signin.php">Anmelden</a>
                         </li>
                         <li>
-                            <a href="pages/signup.php">Registrieren</a>
+                            <a href="../user/signup.php">Registrieren</a>
                         </li>
                     </ul>
                 </div>

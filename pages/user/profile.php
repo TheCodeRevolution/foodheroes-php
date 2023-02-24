@@ -214,13 +214,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             <div class="flex-item-50">
-                <div class="flex-container">
+            <div class="flex-container">
                     <ul>
                         <li>
-                            <a href="index.php">Startseite</a>
+                            <a href="../../index.php">Startseite</a>
                         </li>
                         <li>
-                            <a href="#">Alle Rezepte</a>
+                            <a href="../receipes/receipes.php">Alle Rezepte</a>
                         </li>
                         <li>
                             <a href="signin.php">Anmelden</a>

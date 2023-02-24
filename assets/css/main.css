@@ -327,7 +327,7 @@ footer p {
 /** User Profile **/
 .user__profile__settings {
     margin-top: 50px;
-    height: 60vh;
+    height: 80vh;
 }
 .user__card {
     text-align: center;
@@ -476,14 +476,9 @@ footer p {
 .upload_button {
     border: var(--primary-color) 2px solid;
     border-radius: 6px;
-    display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
     max-width: 300px;
-}
-
-.create__receipe__card .form-group input[type="file"] {
-    display: none;
 }
 
 .create__receipe__card .form-group textarea::placeholder {

@@ -9,6 +9,94 @@ if (auth_user() == null) {
     redirect('signin.php');
 }
 
+$database_connection = db_connect([
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'foodheroes'
+]);
+
+$errors = [];
+
+$all_receipes = db_all('SELECT * FROM receipes WHERE user_id = :user_id', [
+    'user_id' => auth_id()
+]);
+
+$target_dir = "../../uploads/";
+
+$file = $_FILES["upload_img"]["name"] ?? '';
+$imageFileType = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+
+$target_file = $target_dir . basename($file) ?? '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $receipe_title = $_POST['receipe_title'] ?? '';
+    $receipe_portions = $_POST['receipe_portions'] ?? 0;
+    $receipe_description = $_POST['receipe_description'] ?? '';
+
+    if ($receipe_title === '') {
+        $errors['receipe_title'] = 'Du musst einen Rezept Titel angeben';
+    }
+
+    if (is_numeric($receipe_portions) == false) {
+        $errors['receipe_portions'] = 'Die Portionen müssen ein Zahlenwert sein';
+    }
+
+    if ($receipe_portions === '') {
+        $errors['receipe_portions'] = 'Du musst eine Anzahl an Portionen angeben';
+    }
+
+    if ($receipe_portions < 1) {
+        $errors['receipe_portions'] = 'Die Anzahl an Portionen muss mindestens 1 sein';
+    }
+
+    if ($receipe_description === '') {
+        $errors['receipe_description'] = 'Du musst eine Rezept Beschreibung angeben';
+    }
+
+    if ($file == '' && $_FILES["upload_img"]["tmp_name"] == null) {
+        $errors['upload_img'] = 'Du musst ein Bild auswählen!';
+    } else {
+
+        if ($_FILES["upload_img"]["size"] > 500000) {
+            $errors['upload_img'] = 'Die Datei ist zu groß!';
+        }
+
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif"
+        ) {
+            $errors['upload_img'] = 'Dieser Dateityp ist nicht erlaubt!';
+        }
+    }
+
+
+    if (!$errors) {
+
+        if ($file != '' && $_FILES["upload_img"]["tmp_name"] != null) {
+
+            $newfilename = date('dmYHis') . str_replace(" ", "", basename($_FILES["upload_img"]["name"]));
+            move_uploaded_file($_FILES["upload_img"]["tmp_name"], $target_dir . $newfilename);
+        }
+
+        db_insert('receipes', [
+            'user_id' => auth_user()['id'],
+            'description' => $receipe_description,
+            'title' => $receipe_title,
+            'portions' => $receipe_portions,
+            'image' => $newfilename ?? ''
+        ]);
+
+        $receipe_title = '';
+        $receipe_portions = '';
+        $receipe_description = '';
+
+        redirect('dashboard.php');
+
+    }
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +156,7 @@ if (auth_user() == null) {
                         <div class="dropdown">
                             <button class="dropbtn">Dein Account</button>
                             <div class="dropdown-content">
-                            <a href="signup.php">Registrieren</a>
+                                <a href="signup.php">Registrieren</a>
                                 <a href="signin.php">Anmelden</a>
                             </div>
                         </div>
@@ -93,9 +181,9 @@ if (auth_user() == null) {
                 <?php if (auth_user() != null) { ?>
                     <li><a href="profile.php">Profil</a></li>
                     <li> <a href="dashboard.php">Meine Rezepte</a></li>
-                    <li> <a href="../../lib//bootsrap/logout.php">Abmelden</a></li>
+                    <li> <a href="../../lib/bootsrap/logout.php">Abmelden</a></li>
                 <?php } else { ?>
-                    <li>  <a href="signup.php">Registrieren</a></li>
+                    <li> <a href="signup.php">Registrieren</a></li>
                     <li> <a href="signin.php">Anmelden</a></li>
                 <?php } ?>
             </ul>
@@ -115,23 +203,25 @@ if (auth_user() == null) {
                     <tr>
                         <th>ID</th>
                         <th>Titel</th>
+                        <th>Erstellt am</th>
                         <th>Löschen</th>
                     </tr>
-                    <tr>
-                        <td>Alfreds Futterkiste</td>
-                        <td>Maria Anders</td>
-                        <td>Germany</td>
-                    </tr>
-                    <tr>
-                        <td>Berglunds snabbköp</td>
-                        <td>Christina Berglund</td>
-                        <td>Sweden</td>
-                    </tr>
-                    <tr>
-                        <td>Centro comercial Moctezuma</td>
-                        <td>Francisco Chang</td>
-                        <td>Mexico</td>
-                    </tr>
+
+                    <?php foreach ($all_receipes as $value): ?>
+
+                        <tr>
+                            <td>
+                                <?= htmlspecialchars($value['id'])?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($value['title']) ?>
+                            </td>
+                            <td>
+                                <?= htmlspecialchars($value['created_at'] )?>
+                            </td>
+                            <td> <button>Löschen</button> </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </table>
 
             </div>
@@ -144,30 +234,58 @@ if (auth_user() == null) {
             <div class="create__receipe__card">
                 <h2>Rezept anlegen</h2>
 
-                <form action="dashboard.php" method="post">
+                <form action="dashboard.php" method="post" enctype="multipart/form-data">
 
                     <div class="form-group">
                         <label for="receipe_title">Rezept Titel</label>
-                        <input type="text" name="receipe_title" id="receipe_title" placeholder="Rezept Titel">
+                        <input type="text" name="receipe_title" id="receipe_title" placeholder="Rezept Titel"
+                            value='<?= htmlspecialchars($receipe_title ?? '') ?>'>
+
+                        <?php if (isset($errors['receipe_title'])): ?>
+                            <div class="alert">
+                                <?= $errors['receipe_title'] ?>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
 
                     <div class="form-group">
                         <label for="receipe_portions">Anzahl der Portionen</label>
-                        <input type="number" name="receipe_portions" id="receipe_portions" value="0">
+                        <input type="number" name="receipe_portions" id="receipe_portions"
+                            value='<?= htmlspecialchars($receipe_portions ?? 0) ?>'>
+
+                        <?php if (isset($errors['receipe_portions'])): ?>
+                            <div class="alert">
+                                <?= $errors['receipe_portions'] ?>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
 
                     <div class="form-group" style="height: 200px;">
                         <label for="receipe_description">Rezept Beschreibung</label>
                         <textarea name="receipe_description" id="receipe_description" autosize
-                            placeholder="Deine Rezept Beschreibung"></textarea>
+                            placeholder="Deine Rezept Beschreibung"><?= htmlspecialchars($receipe_description ?? '') ?></textarea>
+
+                        <?php if (isset($errors['receipe_description'])): ?>
+                            <div class="alert">
+                                <?= $errors['receipe_description'] ?>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
 
                     <div class="form-group">
-                        <div class="flex-container">
-                            <label for="upload_img" class="upload_button"><i class="fa fa-cloud-upload"></i> Bild
-                                hochladen</label>
-                            <input type="file" id="upload_img" name="upload_img" accept="image/*">
-                        </div>
+                        <label for="upload_img">Bild
+                            hochladen</label>
+                        <input type="file" id="upload_img" name="upload_img" accept="image/*">
+
+                        <?php if (isset($errors['upload_img'])): ?>
+                            <div class="alert">
+                                <?= $errors['upload_img'] ?>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
 
                     <div class="form-group">
@@ -197,10 +315,10 @@ if (auth_user() == null) {
                 <div class="flex-container">
                     <ul>
                         <li>
-                            <a href="index.php">Startseite</a>
+                            <a href="../../index.php">Startseite</a>
                         </li>
                         <li>
-                            <a href="#">Alle Rezepte</a>
+                            <a href="../receipes/receipes.php">Alle Rezepte</a>
                         </li>
                         <li>
                             <a href="signin.php">Anmelden</a>

@@ -14,6 +14,10 @@ $database_connection = db_connect([
 
 session_start();
 
+if(auth_user() != null) {
+    redirect('dashboard.php');
+}
+
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -207,10 +211,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="flex-container">
                     <ul>
                         <li>
-                            <a href="index.php">Startseite</a>
+                            <a href="../../index.php">Startseite</a>
                         </li>
                         <li>
-                            <a href="#">Alle Rezepte</a>
+                            <a href="../receipes/receipes.php">Alle Rezepte</a>
                         </li>
                         <li>
                             <a href="signin.php">Anmelden</a>
