@@ -23,6 +23,7 @@ session_start();
     <link rel="stylesheet" href="assets/css/flex.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
+    <script src="https://kit.fontawesome.com/fa6e6fa057.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -66,8 +67,8 @@ session_start();
                         <div class="dropdown">
                             <button class="dropbtn">Dein Account</button>
                             <div class="dropdown-content">
-                                <a href="">Registrieren</a>
-                                <a href="signin.php">Anmelden</a>
+                                <a href="pages/user/signup.php">Registrieren</a>
+                                <a href="pages/user/signin.php">Anmelden</a>
                             </div>
                         </div>
                     <?php } ?>
@@ -76,6 +77,29 @@ session_start();
             </div>
         </div>
     </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar__button" id="sidebar__button">
+        <button><img src="assets/icons/burger.svg" height="25" width="25" alt="Burger Menu"></button>
+    </div>
+
+    <div class="sidebar__content" id="sidebar__content">
+        <div class="sidebar__items">
+            <ul>
+            <li><a href="index.php">Startseite</a></li>
+                <li><a href="pages/receipes/receipes.php">Alle Rezepte</a></li>
+
+                <?php if (auth_user() != null) { ?>
+                    <li><a href="pages/user/profile.php">Profil</a></li>
+                     <li><a href="pages/receipes/receipes.php">Alle Rezepte</a></li>
+                    <li> <a href="lib/bootsrap/logout.php">Abmelden</a></li>
+                <?php } else { ?>
+                    <li><a href="pages/user/signup.php">Registrieren</a></li>
+                    <li><a href="pages/user/signin.php">Anmelden</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
 
     <!-- New Receipes -->
     <section class="new__receipes">
@@ -368,6 +392,9 @@ session_start();
                 style="color: var(--accent-color)">❤️</span></p>
 
     </footer>
+
+
+    <script src="js/sidebar.js"></script>
 
 </body>
 

@@ -1,0 +1,27 @@
+@media only screen and (max-width: 650px) {
+    nav {
+        display: none;
+    }
+
+    .sidebar__button{
+        display: block;
+    }
+
+    .flex-container {
+        flex-direction: column;
+    }
+
+    footer {
+        min-height: 500px;
+    }
+
+    .grid-container {
+        grid-template-columns: auto;
+        width: 0px;
+    }
+
+    .all__receipes .flex-container:nth-of-type(2) {
+        width: 25%;
+    }
+
+}

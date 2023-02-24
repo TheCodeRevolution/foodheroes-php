@@ -75,6 +75,30 @@ session_start();
         </div>
     </nav>
 
+    <!-- Sidebar -->
+    <div class="sidebar__button" id="sidebar__button">
+        <button><img src="../../assets/icons/burger.svg" height="25" width="25" alt="Burger Menu"></button>
+    </div>
+
+    <div class="sidebar__content" id="sidebar__content">
+        <div class="sidebar__items">
+            <ul>
+            <li><a href="../../index.php">Startseite</a></li>
+            <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
+
+                <?php if (auth_user() != null) { ?>
+                    <li><a href="../user/profile.php">Profil</a></li>
+                    <li><a href="../user/receipes.php">Meine Rezepte</a></li>
+                    <li> <a href="l../user/logout.php">Abmelden</a></li>
+                <?php } else { ?>
+                    <li><a href="../user/signup.php">Registrieren</a></li>
+                    <li><a href="../user/signin.php">Anmelden</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+
+
     <!-- Favourite Receipes -->
 
     <section class="all__receipes" style="margin-top: 60px">
@@ -228,6 +252,7 @@ session_start();
 
     </footer>
 
+    <script src="../../js/sidebar.js"></script>
 </body>
 
 </html>

@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="dropdown">
                             <button class="dropbtn">Dein Account</button>
                             <div class="dropdown-content">
-                                <a href="">Registrieren</a>
+                                <a href="signup.php">Registrieren</a>
                                 <a href="signin.php">Anmelden</a>
                             </div>
                         </div>
@@ -121,6 +121,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </nav>
 
+    <!-- Sidebar -->
+    <div class="sidebar__button" id="sidebar__button">
+        <button><img src="../../assets/icons/burger.svg" height="25" width="25" alt="Burger Menu"></button>
+    </div>
+
+    <div class="sidebar__content" id="sidebar__content">
+        <div class="sidebar__items">
+            <ul>
+                <li><a href="../../index.php">Startseite</a></li>
+                <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
+
+                <?php if (auth_user() != null) { ?>
+                    <li><a href="profile.php">Profil</a></li>
+                    <li> <a href="dashboard.php">Meine Rezepte</a></li>
+                    <li> <a href="../../lib//bootsrap/logout.php">Abmelden</a></li>
+                <?php } else { ?>
+                    <li>  <a href="signup.php">Registrieren</a></li>
+                    <li> <a href="signin.php">Anmelden</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
     <!-- Signin and Signup Form -->
 
     <section class="login__form">
@@ -206,6 +228,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </footer>
 
+
+    <script src="../../js/sidebar.js"></script>
 </body>
 
 </html>
