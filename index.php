@@ -51,7 +51,6 @@ $newReceipes = db_all('SELECT * FROM receipes WHERE created_at >= DATE_SUB(CURDA
                     <ul>
                         <li><a href="index.php">Startseite</a></li>
                         <li><a href="pages/receipes/receipes.php">Alle Rezepte</a></li>
-                        <li><input type="search" name="search" id="search" placeholder="Rezept Suchen"></li>
                     </ul>
                 </div>
             </div>

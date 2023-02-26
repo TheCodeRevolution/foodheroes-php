@@ -22,6 +22,10 @@ $receipe = db_get('SELECT * FROM receipes WHERE id = :id', [
     'id' => $receipe_id
 ]);
 
+$user = db_get('SELECT * FROM user WHERE id = :user_id', [
+    'user_id' => $receipe["user_id"]
+]);
+
 session_start();
 ?>
 
@@ -56,7 +60,6 @@ session_start();
                     <ul>
                         <li><a href="../../index.php">Startseite</a></li>
                         <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
-                        <li><input type="search" name="search" id="search" placeholder="Rezept Suchen"></li>
                     </ul>
                 </div>
             </div>
@@ -92,10 +95,35 @@ session_start();
         </div>
     </nav>
 
+    <!-- Sidebar -->
+    <div class="sidebar__button" id="sidebar__button">
+        <button><img src="../../assets/icons/burger.svg" height="25" width="25" alt="Burger Menu"></button>
+    </div>
+
+    <div class="sidebar__content" id="sidebar__content">
+        <div class="sidebar__items">
+            <ul>
+                <li><a href="../../index.php">Startseite</a></li>
+                <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
+
+                <?php if (auth_user() != null) { ?>
+                    <li><a href="../user/profile.php">Profil</a></li>
+                    <li><a href="../user/dashboard.php">Meine Rezepte</a></li>
+                    <li> <a href="../user/logout.php">Abmelden</a></li>
+                <?php } else { ?>
+                    <li><a href="../user/signup.php">Registrieren</a></li>
+                    <li><a href="../user/signin.php">Anmelden</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Single Receipe -->
     <section class="single__receipe">
         <div class="flex-container">
             <!-- Food Card -->
-            <div class="food__card" style="margin-top: 130px; min-width: 600px">
+            <div class="food__card" style="margin-top: 130px;">
                 <div class="food__card__content">
                     <div class="food__card__header">
                         <img src=" <?='../../uploads/' . $receipe["image"] ?>" alt="Burger">
@@ -110,7 +138,13 @@ session_start();
 
 
                         <p class="food__card__portions">
-                          Portionen:  <?= htmlspecialchars($receipe["portions"]) ?>
+                            Portionen:
+                            <?= htmlspecialchars($receipe["portions"]) ?>
+                        </p>
+
+                        <p class="food__card__user">
+                            <img src="../../assets/icons/user.svg" alt="User" height="16" width="16">
+                            <?= htmlspecialchars($user["username"]) ?>
                         </p>
 
                     </div>
@@ -118,30 +152,6 @@ session_start();
             </div>
         </div>
     </section>
-
-    <!-- Sidebar -->
-    <div class="sidebar__button" id="sidebar__button">
-        <button><img src="../../assets/icons/burger.svg" height="25" width="25" alt="Burger Menu"></button>
-    </div>
-
-    <div class="sidebar__content" id="sidebar__content">
-        <div class="sidebar__items">
-            <ul>
-                <li><a href="../../index.php">Startseite</a></li>
-                <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
-
-                <?php if (auth_user() != null) { ?>
-                    <li><a href="../user/profile.php">Profil</a></li>
-                    <li><a href="../../user/receipes.php">Meine Rezepte</a></li>
-                    <li> <a href="l../user/logout.php">Abmelden</a></li>
-                <?php } else { ?>
-                    <li><a href="../user/signup.php">Registrieren</a></li>
-                    <li><a href="../user/signin.php">Anmelden</a></li>
-                <?php } ?>
-            </ul>
-        </div>
-    </div>
-
 
 
     <!-- Footer -->

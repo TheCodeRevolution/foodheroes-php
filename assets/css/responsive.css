@@ -21,19 +21,19 @@
     }
 
     .all__receipes .flex-container:nth-of-type(2) {
-        width: 25%;
+        width: 10%;
     }
 
     .grid-item .food__card {
-       width: 200px;
+        min-width: 300px;
     }
 
     .all__user__receipes__card {
-        width: 80%;
+        width: 90%;
     }
 
     .create__receipe__card {
-        width: 80%;
+        width: 90%;
     }
 
     .user__card {
@@ -42,6 +42,45 @@
 
     .user__card .form-group input {
         min-width: 90%;
+    }
+    .food__card {
+        min-width: 300px;
+    }
+
+    .food__card img {
+        width: 60%;
+    }
+
+    .register__form form {
+        width: 80%;
+    }
+
+    .register__form .form-group input {
+        min-width: 60%;
+    }
+
+    .login__form form {
+        width: 80%;
+    }
+
+    .login__form .form-group input {
+        min-width: 60%;
+    }
+
+    .create__receipe__card .form-group input  {
+        min-width: 90%;
+    }
+
+    .create__receipe__card .form-group textarea  {
+        min-width: 90%;
+    }
+    
+    .single__receipe .flex-container .food__card {
+        max-width: 80%;
+    }
+
+    .single__receipe .flex-container .food__card img {
+        width: 200px;
     }
 
 }

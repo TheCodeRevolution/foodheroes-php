@@ -136,7 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <ul>
                         <li><a href="../../index.php">Startseite</a></li>
                         <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
-                        <li><input type="search" name="search" id="search" placeholder="Rezept Suchen"></li>
                     </ul>
                 </div>
             </div>
@@ -203,55 +202,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h2>Alle deine Rezepte</h2>
 
                 <!-- Table -->
-
-                <table id="all__receipes">
-                    <tr>
-                        <th>Titel</th>
-                        <th>Beschreibung</th>
-                        <th>Erstellt am</th>
-                        <th>Editieren</th>
-                        <th>Löschen</th>
-                    </tr>
-
-                    <?php foreach ($all_receipes as $value): ?>
-
+                <div style="overflow-x:auto;">
+                    <table id="all__receipes">
                         <tr>
-                            <form action="../../lib/bootsrap/update.php" method="post">
-                                <td>
-                                    <input type="text" name="update__title" id="update__title"
-                                        value=" <?= htmlspecialchars($value['title']) ?>">
-                                </td>
-
-                                <td>
-                                    <textarea name="update__description" id="update__descriptio" cols="40"
-                                        rows="3"><?= htmlspecialchars($value['description']) ?></textarea>
-                                </td>
-
-                                <td>
-                                    <?= htmlspecialchars($value['created_at']) ?>
-                                </td>
-                                <td>
-
-                                    <input type="hidden" name="updated_id" value="<?= $value["id"] ?>">
-                                    <input type="submit" value="Aktualisieren">
-
-                                </td>
-
-                            </form>
-
-                            <td>
-
-                                <form action="../../lib/bootsrap/delete.php" method="post">
-                                    <input type="hidden" name="deleted_id" value="<?= $value["id"] ?>">
-                                    <button type="submit" class="delete__button"><img src="../../assets/icons/trash.svg"
-                                            alt="Trash" height="15" width="15"></button>
-                                </form>
-                            </td>
-
+                            <th>Titel</th>
+                            <th>Beschreibung</th>
+                            <th>Erstellt am</th>
+                            <th>Editieren</th>
+                            <th>Löschen</th>
                         </tr>
 
-                    <?php endforeach; ?>
-                </table>
+                        <?php foreach ($all_receipes as $value): ?>
+
+                            <tr>
+                                <form action="../../lib/bootsrap/update.php" method="post">
+                                    <td>
+                                        <input type="text" name="update__title" id="update__title"
+                                            value=" <?= htmlspecialchars($value['title']) ?>">
+                                    </td>
+
+                                    <td>
+                                        <textarea name="update__description" id="update__descriptio" cols="40"
+                                            rows="3"><?= htmlspecialchars($value['description']) ?></textarea>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($value['created_at']) ?>
+                                    </td>
+                                    <td>
+
+                                        <input type="hidden" name="updated_id" value="<?= $value["id"] ?>">
+                                        <input type="submit" value="Aktualisieren">
+
+                                    </td>
+
+                                </form>
+
+                                <td>
+
+                                    <form action="../../lib/bootsrap/delete.php" method="post">
+                                        <input type="hidden" name="deleted_id" value="<?= $value["id"] ?>">
+                                        <button type="submit" class="delete__button"><img src="../../assets/icons/trash.svg"
+                                                alt="Trash" height="15" width="15"></button>
+                                    </form>
+                                </td>
+
+                            </tr>
+
+                        <?php endforeach; ?>
+                    </table>
+
+                </div>
             </div>
         </div>
 

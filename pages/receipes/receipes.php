@@ -64,7 +64,12 @@ $recipes_on_current_page = array_slice($allReceipes, $start, $items_per_page);
                     <ul>
                         <li><a href="../../index.php">Startseite</a></li>
                         <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
-                        <li><input type="search" name="search" id="search" placeholder="Rezept Suchen"></li>
+                        <li>
+
+                            <form action="../../lib/bootsrap/search.php" method="post">
+                            </form>
+
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -113,8 +118,8 @@ $recipes_on_current_page = array_slice($allReceipes, $start, $items_per_page);
 
                 <?php if (auth_user() != null) { ?>
                     <li><a href="../user/profile.php">Profil</a></li>
-                    <li><a href="../../user/receipes.php">Meine Rezepte</a></li>
-                    <li> <a href="l../user/logout.php">Abmelden</a></li>
+                    <li><a href="../user/dashboard.php">Meine Rezepte</a></li>
+                    <li> <a href="../user/logout.php">Abmelden</a></li>
                 <?php } else { ?>
                     <li><a href="../user/signup.php">Registrieren</a></li>
                     <li><a href="../user/signin.php">Anmelden</a></li>

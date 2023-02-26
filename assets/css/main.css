@@ -260,6 +260,18 @@ footer p {
     min-width: 400px;
 }
 
+.food__card__user {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    height:1em;
+    width:1em;
+}
+
+.food__card__user>img {
+    margin-right: 8px;
+}
+
 .food__card__portions {
     margin-top: 20px;
 }
@@ -612,4 +624,8 @@ footer p {
 /** Single Receipe **/
 .single__receipe {
     min-height: 650px;
+}
+
+.single__receipe .food__card {
+    width: 600px
 }

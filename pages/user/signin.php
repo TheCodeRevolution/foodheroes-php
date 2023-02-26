@@ -89,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <ul>
                         <li><a href="../../index.php">Startseite</a></li>
                         <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
-                        <li><input type="search" name="search" id="search" placeholder="Rezept Suchen"></li>
                     </ul>
                 </div>
             </div>
