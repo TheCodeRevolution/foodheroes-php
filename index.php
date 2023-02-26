@@ -4,8 +4,16 @@ require('lib/session.php');
 require('lib/authentication.php');
 require('lib/response.php');
 
+$database_connection = db_connect([
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'foodheroes'
+]);
 
 session_start();
+
+$newReceipes = db_all('SELECT * FROM receipes WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 3 DAY) LIMIT 3');
 
 ?>
 
@@ -86,12 +94,12 @@ session_start();
     <div class="sidebar__content" id="sidebar__content">
         <div class="sidebar__items">
             <ul>
-            <li><a href="index.php">Startseite</a></li>
+                <li><a href="index.php">Startseite</a></li>
                 <li><a href="pages/receipes/receipes.php">Alle Rezepte</a></li>
 
                 <?php if (auth_user() != null) { ?>
                     <li><a href="pages/user/profile.php">Profil</a></li>
-                     <li><a href="pages/receipes/receipes.php">Alle Rezepte</a></li>
+                    <li><a href="pages/receipes/receipes.php">Alle Rezepte</a></li>
                     <li> <a href="lib/bootsrap/logout.php">Abmelden</a></li>
                 <?php } else { ?>
                     <li><a href="pages/user/signup.php">Registrieren</a></li>
@@ -112,246 +120,43 @@ session_start();
         <!--Receipes Images -->
         <div class="flex-container">
             <div class="flex-container" style="width: 80%;">
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
 
-                                    <!-- PHP: Nach 5 Wörtern Zeichenumbruch -->
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
+                <?php foreach ($newReceipes as $value): ?>
 
-                                    <button class="food__card__button">Weitere Informationen</button>
+                    <div class="flex-item-33">
+                        <div class="flex-container">
+                            <!-- Food Card -->
+                            <div class="food__card">
+                                <div class="food__card__content">
+                                    <div class="food__card__header">
+                                        <img src=" <?='uploads/' . $value["image"] ?>" alt="Burger">
+                                    </div>
+                                    <div class="food__card__body">
+                                        <h2>
+                                            <?= htmlspecialchars($value["title"]) ?>
+                                        </h2>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
+                                        <!-- PHP: Nach 5 Wörtern Zeichenumbruch -->
+                                        <p class="food__card__description">
+                                            <?= strlen(htmlspecialchars($value["description"])) > 30 ? substr(htmlspecialchars($value["description"]), 0, 30) . "..." : htmlspecialchars($value["description"]) ?>
+                                        </p>
 
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
+                                        <a class="food__card__button"
+                                            href="pages/receipes/single_receipe.php?receipe_id=<?= htmlspecialchars($value["id"]) ?>">Weitere
+                                            Informationen</a>
 
-                                    <button class="food__card__button">Weitere Informationen</button>
-
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
 
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
-
-                                    <button class="food__card__button">Weitere Informationen</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
     </section>
 
-
-    <!-- Fast Receipes -->
-    <section class="fast__receipes">
-        <div class="flex-container">
-            <div class="headline">
-                <h1>Schnelle Rezepte</h1>
-            </div>
-        </div>
-
-        <!--Receipes Images -->
-        <div class="flex-container">
-            <div class="flex-container" style="width: 80%;">
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
-
-
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
-
-                                    <button class="food__card__button">Weitere Informationen</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
-
-
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
-
-                                    <button class="food__card__button">Weitere Informationen</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
-
-
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
-
-                                    <button class="food__card__button">Weitere Informationen</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Favourite Receipes -->
-
-    <section class="favourite__receipes">
-        <div class="flex-container">
-            <div class="headline">
-                <h1>Beliebte Rezepte</h1>
-            </div>
-        </div>
-
-        <!--Receipes Images -->
-        <div class="flex-container">
-            <div class="flex-container" style="width: 80%;">
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
-
-
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
-
-                                    <button class="food__card__button">Weitere Informationen</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
-
-
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
-
-                                    <button class="food__card__button">Weitere Informationen</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-item-33">
-                    <div class="flex-container">
-                        <!-- Food Card -->
-                        <div class="food__card">
-                            <div class="food__card__content">
-                                <div class="food__card__header">
-                                    <img src="burger.webp" alt="Burger">
-                                </div>
-                                <div class="food__card__body">
-                                    <h2>Burger</h2>
-
-
-                                    <p class="food__card__description">
-                                        Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                    </p>
-
-                                    <button class="food__card__button">Weitere Informationen</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
 
 
     <!-- Footer -->

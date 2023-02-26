@@ -6,6 +6,31 @@ require('../../lib/authentication.php');
 require('../../lib/response.php');
 
 session_start();
+
+$database_connection = db_connect([
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'foodheroes'
+]);
+
+$items_per_page = 4;
+
+$allReceipes = db_all('SELECT * FROM receipes');
+
+$total_items = count($allReceipes);
+
+$current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+
+$total_pages = ceil($total_items / $items_per_page);
+
+$current_page = max(1, min($current_page, $total_pages));
+
+$start = ($current_page - 1) * $items_per_page;
+$end = $start + $items_per_page;
+
+$recipes_on_current_page = array_slice($allReceipes, $start, $items_per_page);
+
 ?>
 
 <!DOCTYPE html>
@@ -83,8 +108,8 @@ session_start();
     <div class="sidebar__content" id="sidebar__content">
         <div class="sidebar__items">
             <ul>
-            <li><a href="../../index.php">Startseite</a></li>
-            <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
+                <li><a href="../../index.php">Startseite</a></li>
+                <li><a href="../receipes/receipes.php">Alle Rezepte</a></li>
 
                 <?php if (auth_user() != null) { ?>
                     <li><a href="../user/profile.php">Profil</a></li>
@@ -112,86 +137,35 @@ session_start();
         <div class="flex-container" style="margin-top: 10px">
 
             <div class="grid-container">
-                <div class="grid-item">
-                    <!-- Food Card -->
-                    <div class="food__card">
-                        <div class="food__card__content">
-                            <div class="food__card__header">
-                                <img src="../../burger.webp" alt="Burger">
-                            </div>
-                            <div class="food__card__body">
-                                <h2>Burger</h2>
+
+                <?php foreach ($recipes_on_current_page as $value): ?>
+
+                    <div class="grid-item">
+                        <!-- Food Card -->
+                        <div class="food__card">
+                            <div class="food__card__content">
+                                <div class="food__card__header">
+                                    <img src="../../uploads/<?= $value["image"] ?>" alt="Burger">
+                                </div>
+                                <div class="food__card__body">
+                                    <h2>
+                                        <?= htmlspecialchars($value["title"]) ?>
+                                    </h2>
 
 
-                                <p class="food__card__description">
-                                    Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                </p>
+                                    <p class="food__card__description">
+                                        <?= strlen(htmlspecialchars($value["description"])) > 30 ? substr(htmlspecialchars($value["description"]), 0, 30) . "..." : htmlspecialchars($value["description"]) ?>
+                                    </p>
 
-                                <button class="food__card__button">Weitere Informationen</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item">
-                    <!-- Food Card -->
-                    <div class="food__card">
-                        <div class="food__card__content">
-                            <div class="food__card__header">
-                                <img src="../../burger.webp" alt="Burger">
-                            </div>
-                            <div class="food__card__body">
-                                <h2>Burger</h2>
-
-
-                                <p class="food__card__description">
-                                    Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                </p>
-
-                                <button class="food__card__button">Weitere Informationen</button>
+                                    <a class="food__card__button"
+                                        href="../../pages/receipes/single_receipe.php?receipe_id=<?= htmlspecialchars($value["id"]) ?>">Weitere
+                                        Informationen</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="grid-item">
-                    <!-- Food Card -->
-                    <div class="food__card">
-                        <div class="food__card__content">
-                            <div class="food__card__header">
-                                <img src="../../burger.webp" alt="Burger">
-                            </div>
-                            <div class="food__card__body">
-                                <h2>Burger</h2>
 
-
-                                <p class="food__card__description">
-                                    Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                </p>
-
-                                <button class="food__card__button">Weitere Informationen</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-item">
-                    <!-- Food Card -->
-                    <div class="food__card">
-                        <div class="food__card__content">
-                            <div class="food__card__header">
-                                <img src="../../burger.webp" alt="Burger">
-                            </div>
-                            <div class="food__card__body">
-                                <h2>Burger</h2>
-
-
-                                <p class="food__card__description">
-                                    Lorem ipsum dolor sit amet, <br> consetetur sadipscing elitr, sed diam ...
-                                </p>
-
-                                <button class="food__card__button">Weitere Informationen</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
 
         </div>
@@ -199,14 +173,17 @@ session_start();
         <!-- Pagination -->
         <div class="flex-container">
             <div class="pagination">
-                <a href="#">&laquo;</a>
-                <a href="#">1</a>
-                <a class="active" href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-                <a href="#">&raquo;</a>
+
+                <?php
+
+                for ($i = 1; $i <= $total_pages; $i++) {
+                    if ($i == $current_page) {
+                        echo ' <a class="active" href="#">' . $i . '</a>';
+                    } else {
+                        echo '<a href="?page=' . $i . '">' . $i . '</a>';
+                    }
+                }
+                ?>
             </div>
         </div>
 

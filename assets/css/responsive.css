@@ -24,6 +24,10 @@
         width: 25%;
     }
 
+    .grid-item .food__card {
+       width: 200px;
+    }
+
     .all__user__receipes__card {
         width: 80%;
     }
@@ -31,4 +35,23 @@
     .create__receipe__card {
         width: 80%;
     }
+
+    .user__card {
+        width: 80%;
+    }
+
+    .user__card .form-group input {
+        min-width: 90%;
+    }
+
 }
+
+@media (min-width: 60em) {
+    .modaloverlay .modal {
+      height: 75%;
+      margin: 5% auto;
+      max-height: 57em;
+      max-width: 66em;
+      width: 85%;
+    }
+  }

@@ -29,6 +29,11 @@ $imageFileType = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
 $target_file = $target_dir . basename($file) ?? '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $edit_row_id = $_POST['edit_row_id'] ?? '';
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $receipe_title = $_POST['receipe_title'] ?? '';
@@ -201,31 +206,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <table id="all__receipes">
                     <tr>
-                        <th>ID</th>
                         <th>Titel</th>
+                        <th>Beschreibung</th>
                         <th>Erstellt am</th>
+                        <th>Editieren</th>
                         <th>Löschen</th>
                     </tr>
 
                     <?php foreach ($all_receipes as $value): ?>
 
                         <tr>
+                            <form action="../../lib/bootsrap/update.php" method="post">
+                                <td>
+                                    <input type="text" name="update__title" id="update__title"
+                                        value=" <?= htmlspecialchars($value['title']) ?>">
+                                </td>
+
+                                <td>
+                                    <textarea name="update__description" id="update__descriptio" cols="40"
+                                        rows="3"><?= htmlspecialchars($value['description']) ?></textarea>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($value['created_at']) ?>
+                                </td>
+                                <td>
+
+                                    <input type="hidden" name="updated_id" value="<?= $value["id"] ?>">
+                                    <input type="submit" value="Aktualisieren">
+
+                                </td>
+
+                            </form>
+
                             <td>
-                                <?= htmlspecialchars($value['id'])?>
+
+                                <form action="../../lib/bootsrap/delete.php" method="post">
+                                    <input type="hidden" name="deleted_id" value="<?= $value["id"] ?>">
+                                    <button type="submit" class="delete__button"><img src="../../assets/icons/trash.svg"
+                                            alt="Trash" height="15" width="15"></button>
+                                </form>
                             </td>
-                            <td>
-                                <?= htmlspecialchars($value['title']) ?>
-                            </td>
-                            <td>
-                                <?= htmlspecialchars($value['created_at'] )?>
-                            </td>
-                            <td> <button>Löschen</button> </td>
+
                         </tr>
+
                     <?php endforeach; ?>
                 </table>
-
             </div>
         </div>
+
+
     </section>
 
     <!-- Create new Receipe -->
@@ -338,6 +368,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     <script src="../../js/sidebar.js"></script>
+
 </body>
 
 </html>
